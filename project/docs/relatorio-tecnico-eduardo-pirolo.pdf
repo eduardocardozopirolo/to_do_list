@@ -1,0 +1,320 @@
+%PDF-1.4
+%‚„œ”
+1 0 obj
+<< /Type /Catalog /Pages 2 0 R >>
+endobj
+2 0 obj
+<< /Type /Pages /Kids [4 0 R 6 0 R 8 0 R 10 0 R] /Count 4 >>
+endobj
+3 0 obj
+<< /Length 665 >>
+stream
+BT
+/F2 20 Tf
+1 0 0 1 54 790 Tm (Projeto To Do AWS) Tj
+/F1 11 Tf
+1 0 0 1 54 764 Tm (Relatorio Tecnico) Tj
+/F1 11 Tf
+1 0 0 1 54 743 Tm (Aluno: Eduardo Pirolo) Tj
+/F1 11 Tf
+1 0 0 1 54 722 Tm (Data: 26/05/2026) Tj
+/F1 11 Tf
+1 0 0 1 54 701 Tm (Repositorio: github.com/eduardocardozopirolo/to_do_list) Tj
+/F1 11 Tf
+1 0 0 1 54 680 Tm () Tj
+/F1 11 Tf
+1 0 0 1 54 659 Tm (Aplicacao CRUD de tarefas com backend Node.js/Express, Docker, Amazon EC2, Amazon) Tj
+/F1 11 Tf
+1 0 0 1 54 645 Tm (RDS PostgreSQL, AWS Lambda, API Gateway e frontend web em HTML, CSS e JavaScript.) Tj
+/F1 8 Tf
+1 0 0 1 54 30 Tm (Eduardo Pirolo - Projeto To Do AWS) Tj
+1 0 0 1 510 30 Tm (Pagina 1/4) Tj
+ET
+endstream
+endobj
+4 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 11 0 R /F2 12 0 R >> >> /Contents 3 0 R >>
+endobj
+5 0 obj
+<< /Length 3452 >>
+stream
+BT
+/F2 14 Tf
+1 0 0 1 54 790 Tm (1. Objetivo) Tj
+/F1 10 Tf
+1 0 0 1 54 768 Tm (O projeto demonstra uma aplicacao CRUD completa em ambiente AWS. O usuario pode criar,) Tj
+/F1 10 Tf
+1 0 0 1 54 754 Tm (listar, atualizar e excluir tarefas. Os dados sao persistidos em um banco PostgreSQL) Tj
+/F1 10 Tf
+1 0 0 1 54 740 Tm (gerenciado pelo Amazon RDS.) Tj
+/F1 10 Tf
+1 0 0 1 54 722 Tm (Alem do CRUD, uma funcao AWS Lambda gera um relatorio com total de tarefas, tarefas) Tj
+/F1 10 Tf
+1 0 0 1 54 708 Tm (concluidas e tarefas pendentes. Essa funcao e exposta por uma rota GET /report no API) Tj
+/F1 10 Tf
+1 0 0 1 54 694 Tm (Gateway.) Tj
+/F2 14 Tf
+1 0 0 1 54 676 Tm (2. Arquitetura) Tj
+/F1 10 Tf
+1 0 0 1 54 654 Tm (Fluxo principal:) Tj
+/F1 10 Tf
+1 0 0 1 54 636 Tm (Usuario -> Frontend HTML/CSS/JS -> Backend Node.js/Express na EC2 -> Amazon RDS) Tj
+/F1 10 Tf
+1 0 0 1 54 622 Tm (PostgreSQL) Tj
+/F1 10 Tf
+1 0 0 1 54 604 Tm (Fluxo do relatorio:) Tj
+/F1 10 Tf
+1 0 0 1 54 586 Tm (Usuario -> API Gateway GET /report -> AWS Lambda -> Backend GET /tasks -> Amazon RDS) Tj
+/F1 10 Tf
+1 0 0 1 54 572 Tm (PostgreSQL) Tj
+/F1 10 Tf
+1 0 0 1 54 554 Tm (Essa separacao mostra o uso de EC2 para hospedagem de containers, RDS para persistencia,) Tj
+/F1 10 Tf
+1 0 0 1 54 540 Tm (Lambda para processamento sob demanda e API Gateway para exposicao de endpoint) Tj
+/F1 10 Tf
+1 0 0 1 54 526 Tm (serverless.) Tj
+/F2 14 Tf
+1 0 0 1 54 508 Tm (3. Componentes Utilizados) Tj
+/F1 10 Tf
+1 0 0 1 54 486 Tm (Frontend: interface web estatica para consumir a API, executar CRUD e mostrar relatorio.) Tj
+/F1 10 Tf
+1 0 0 1 54 468 Tm (Node.js + Express: backend REST responsavel pelas rotas de tarefas.) Tj
+/F1 10 Tf
+1 0 0 1 54 450 Tm (Docker: empacotamento do backend e frontend em containers.) Tj
+/F1 10 Tf
+1 0 0 1 54 432 Tm (EC2: hospedagem dos containers da aplicacao.) Tj
+/F1 10 Tf
+1 0 0 1 54 414 Tm (RDS PostgreSQL: banco relacional gerenciado para persistencia das tarefas.) Tj
+/F1 10 Tf
+1 0 0 1 54 396 Tm (Lambda: funcao responsavel por consultar /tasks e calcular estatisticas.) Tj
+/F1 10 Tf
+1 0 0 1 54 378 Tm (API Gateway: exposicao publica da rota GET /report integrada a Lambda.) Tj
+/F2 14 Tf
+1 0 0 1 54 360 Tm (4. Modelo de Dados) Tj
+/F1 10 Tf
+1 0 0 1 54 338 Tm (Tabela principal: tasks.) Tj
+/F1 10 Tf
+1 0 0 1 54 320 Tm (Campos: id, title, description, status, created_at.) Tj
+/F1 10 Tf
+1 0 0 1 54 302 Tm (SQL utilizado:) Tj
+/F1 9 Tf
+1 0 0 1 54 284 Tm (CREATE TABLE tasks \() Tj
+/F1 9 Tf
+1 0 0 1 54 266 Tm (  id SERIAL PRIMARY KEY,) Tj
+/F1 9 Tf
+1 0 0 1 54 248 Tm (  title VARCHAR\(255\),) Tj
+/F1 9 Tf
+1 0 0 1 54 230 Tm (  description TEXT,) Tj
+/F1 9 Tf
+1 0 0 1 54 212 Tm (  status VARCHAR\(50\),) Tj
+/F1 9 Tf
+1 0 0 1 54 194 Tm (  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP) Tj
+/F1 9 Tf
+1 0 0 1 54 176 Tm (\);) Tj
+/F1 10 Tf
+1 0 0 1 54 158 Tm (O campo status identifica tarefas pendentes ou concluidas. A Lambda considera completed,) Tj
+/F1 10 Tf
+1 0 0 1 54 144 Tm (complete, done, concluido e concluida como status de conclusao.) Tj
+/F2 14 Tf
+1 0 0 1 54 126 Tm (5. Backend e Rotas) Tj
+/F1 10 Tf
+1 0 0 1 54 104 Tm (O backend foi implementado com Express. A conexao com o PostgreSQL fica centralizada em) Tj
+/F1 10 Tf
+1 0 0 1 54 90 Tm (src/db.js, usando variaveis de ambiente para manter credenciais fora do codigo.) Tj
+/F1 9 Tf
+1 0 0 1 54 72 Tm (GET /tasks: lista todas as tarefas.) Tj
+/F1 8 Tf
+1 0 0 1 54 30 Tm (Eduardo Pirolo - Projeto To Do AWS) Tj
+1 0 0 1 510 30 Tm (Pagina 2/4) Tj
+ET
+endstream
+endobj
+6 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 11 0 R /F2 12 0 R >> >> /Contents 5 0 R >>
+endobj
+7 0 obj
+<< /Length 3577 >>
+stream
+BT
+/F1 9 Tf
+1 0 0 1 54 790 Tm (POST /tasks: cria uma tarefa.) Tj
+/F1 9 Tf
+1 0 0 1 54 772 Tm (PUT /tasks/{id}: atualiza uma tarefa existente.) Tj
+/F1 9 Tf
+1 0 0 1 54 754 Tm (DELETE /tasks/{id}: remove uma tarefa.) Tj
+/F1 9 Tf
+1 0 0 1 54 736 Tm (GET /report: relatorio exposto pelo API Gateway e Lambda.) Tj
+/F1 10 Tf
+1 0 0 1 54 718 Tm (Exemplo de POST /tasks: { title: 'Teste RDS', description: 'Criado pela API', status:) Tj
+/F1 10 Tf
+1 0 0 1 54 704 Tm ('pending' }.) Tj
+/F2 14 Tf
+1 0 0 1 54 686 Tm (6. RDS PostgreSQL) Tj
+/F1 10 Tf
+1 0 0 1 54 664 Tm (O Amazon RDS hospeda o PostgreSQL usado pela aplicacao. O backend acessa o banco pela) Tj
+/F1 10 Tf
+1 0 0 1 54 650 Tm (porta 5432 com SSL habilitado.) Tj
+/F1 10 Tf
+1 0 0 1 54 632 Tm (Variaveis principais:) Tj
+/F1 9 Tf
+1 0 0 1 54 614 Tm (DB_HOST=tododb.cozyt5tthfmg.us-east-1.rds.amazonaws.com) Tj
+/F1 9 Tf
+1 0 0 1 54 596 Tm (DB_USER=postgres) Tj
+/F1 9 Tf
+1 0 0 1 54 578 Tm (DB_NAME=postgres) Tj
+/F1 9 Tf
+1 0 0 1 54 560 Tm (DB_PORT=5432) Tj
+/F1 9 Tf
+1 0 0 1 54 542 Tm (DB_SSL=true) Tj
+/F1 10 Tf
+1 0 0 1 54 524 Tm (A senha real fica somente no arquivo .env da EC2 e nao deve ser publicada no GitHub.) Tj
+/F1 10 Tf
+1 0 0 1 54 506 Tm (Comando de validacao: psql -h tododb.cozyt5tthfmg.us-east-1.rds.amazonaws.com -U) Tj
+/F1 10 Tf
+1 0 0 1 54 492 Tm (postgres -d postgres -p 5432) Tj
+/F1 10 Tf
+1 0 0 1 54 474 Tm (Query de validacao: SELECT * FROM tasks ORDER BY id DESC;) Tj
+/F2 14 Tf
+1 0 0 1 54 456 Tm (7. Docker e Deploy na EC2) Tj
+/F1 10 Tf
+1 0 0 1 54 434 Tm (O backend e o frontend foram preparados para execucao em Docker. No backend, o container) Tj
+/F1 10 Tf
+1 0 0 1 54 420 Tm (executa a API Node.js na porta 3000. No frontend, o Nginx serve os arquivos estaticos na) Tj
+/F1 10 Tf
+1 0 0 1 54 406 Tm (porta 80 do container.) Tj
+/F1 10 Tf
+1 0 0 1 54 388 Tm (Backend: cd project/backend; docker compose up -d --build; docker logs todo-api.) Tj
+/F1 10 Tf
+1 0 0 1 54 370 Tm (Frontend: cd project/frontend; docker build -t todo-frontend .; docker run -d --name) Tj
+/F1 10 Tf
+1 0 0 1 54 356 Tm (todo-frontend --restart always -p 8080:80 todo-frontend.) Tj
+/F1 10 Tf
+1 0 0 1 54 338 Tm (O parametro --restart always garante que o container do frontend reinicie) Tj
+/F1 10 Tf
+1 0 0 1 54 324 Tm (automaticamente caso a EC2 seja reiniciada.) Tj
+/F2 14 Tf
+1 0 0 1 54 306 Tm (8. Lambda e API Gateway) Tj
+/F1 10 Tf
+1 0 0 1 54 284 Tm (A Lambda fica em project/lambda/report/index.mjs. Ela busca as tarefas no endpoint) Tj
+/F1 10 Tf
+1 0 0 1 54 270 Tm (configurado em TASKS_API_URL e retorna um JSON com estatisticas.) Tj
+/F1 9 Tf
+1 0 0 1 54 252 Tm (Nome: lamdaapitodo) Tj
+/F1 9 Tf
+1 0 0 1 54 234 Tm (Runtime: Node.js 20.x) Tj
+/F1 9 Tf
+1 0 0 1 54 216 Tm (Handler: index.handler) Tj
+/F1 9 Tf
+1 0 0 1 54 198 Tm (TASKS_API_URL=http://IP_DA_EC2_BACKEND:3000/tasks) Tj
+/F1 10 Tf
+1 0 0 1 54 180 Tm (Resposta esperada: { total: 5, completed: 2, pending: 3, generated_at: '...' }.) Tj
+/F1 10 Tf
+1 0 0 1 54 162 Tm (No API Gateway, a rota GET /report deve estar integrada diretamente com a Lambda.) Tj
+/F2 14 Tf
+1 0 0 1 54 144 Tm (9. Frontend) Tj
+/F1 10 Tf
+1 0 0 1 54 122 Tm (O frontend foi criado em HTML, CSS e JavaScript puro. Ele permite configurar a URL da) Tj
+/F1 10 Tf
+1 0 0 1 54 108 Tm (API de tarefas e a URL do relatorio.) Tj
+/F1 10 Tf
+1 0 0 1 54 90 Tm (Funcionalidades: listar tarefas, criar tarefas, editar tarefas, concluir tarefas,) Tj
+/F1 10 Tf
+1 0 0 1 54 76 Tm (excluir tarefas e visualizar cards de total, concluidas e pendentes.) Tj
+/F1 8 Tf
+1 0 0 1 54 30 Tm (Eduardo Pirolo - Projeto To Do AWS) Tj
+1 0 0 1 510 30 Tm (Pagina 3/4) Tj
+ET
+endstream
+endobj
+8 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 11 0 R /F2 12 0 R >> >> /Contents 7 0 R >>
+endobj
+9 0 obj
+<< /Length 2262 >>
+stream
+BT
+/F1 9 Tf
+1 0 0 1 54 790 Tm (URL da API de tarefas: http://IP_DA_EC2_BACKEND:3000) Tj
+/F1 9 Tf
+1 0 0 1 54 772 Tm (URL do relatorio: https://SUA-API-GATEWAY.execute-api.us-) Tj
+/F1 9 Tf
+1 0 0 1 54 758 Tm (east-1.amazonaws.com/report) Tj
+/F2 14 Tf
+1 0 0 1 54 740 Tm (10. Seguranca e Redes) Tj
+/F1 10 Tf
+1 0 0 1 54 718 Tm (EC2 Backend: SSH 22 do IP do aluno e TCP 3000 publico para testes.) Tj
+/F1 10 Tf
+1 0 0 1 54 700 Tm (RDS: PostgreSQL 5432 somente do Security Group da EC2 backend.) Tj
+/F1 10 Tf
+1 0 0 1 54 682 Tm (EC2 Frontend: SSH 22 do IP do aluno e TCP 8080 ou HTTP 80 publico.) Tj
+/F1 10 Tf
+1 0 0 1 54 664 Tm (Lambda: se estiver fora da VPC e chamando a EC2 publica, nao precisa de Security Group) Tj
+/F1 10 Tf
+1 0 0 1 54 650 Tm (proprio.) Tj
+/F1 10 Tf
+1 0 0 1 54 632 Tm (Em producao, o backend nao deveria ficar exposto diretamente na porta 3000. O ideal) Tj
+/F1 10 Tf
+1 0 0 1 54 618 Tm (seria usar Load Balancer ou API Gateway com VPC Link.) Tj
+/F2 14 Tf
+1 0 0 1 54 600 Tm (11. Testes e Validacao) Tj
+/F1 10 Tf
+1 0 0 1 54 578 Tm (1. GET /tasks retorna uma lista JSON.) Tj
+/F1 10 Tf
+1 0 0 1 54 560 Tm (2. POST /tasks cria uma tarefa e retorna um id.) Tj
+/F1 10 Tf
+1 0 0 1 54 542 Tm (3. SELECT * FROM tasks no RDS confirma persistencia.) Tj
+/F1 10 Tf
+1 0 0 1 54 524 Tm (4. PUT /tasks/{id} altera uma tarefa.) Tj
+/F1 10 Tf
+1 0 0 1 54 506 Tm (5. DELETE /tasks/{id} remove uma tarefa.) Tj
+/F1 10 Tf
+1 0 0 1 54 488 Tm (6. GET /report retorna total, completed, pending e generated_at.) Tj
+/F1 10 Tf
+1 0 0 1 54 470 Tm (7. Frontend consome backend e relatorio corretamente.) Tj
+/F2 14 Tf
+1 0 0 1 54 452 Tm (12. Conclusao) Tj
+/F1 10 Tf
+1 0 0 1 54 430 Tm (O projeto entrega uma aplicacao distribuida funcional com persistencia em banco) Tj
+/F1 10 Tf
+1 0 0 1 54 416 Tm (gerenciado, backend conteinerizado, frontend separado, Lambda para relatorio e API) Tj
+/F1 10 Tf
+1 0 0 1 54 402 Tm (Gateway para endpoint serverless.) Tj
+/F1 10 Tf
+1 0 0 1 54 384 Tm (Como melhoria futura, o backend pode ser colocado atras de um Application Load Balancer) Tj
+/F1 10 Tf
+1 0 0 1 54 370 Tm (ou API Gateway com VPC Link, removendo o acesso publico direto a porta 3000 da EC2.) Tj
+/F1 8 Tf
+1 0 0 1 54 30 Tm (Eduardo Pirolo - Projeto To Do AWS) Tj
+1 0 0 1 510 30 Tm (Pagina 4/4) Tj
+ET
+endstream
+endobj
+10 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 11 0 R /F2 12 0 R >> >> /Contents 9 0 R >>
+endobj
+11 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>
+endobj
+12 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold >>
+endobj
+xref
+0 13
+0000000000 65535 f 
+0000000015 00000 n 
+0000000064 00000 n 
+0000000140 00000 n 
+0000000856 00000 n 
+0000000994 00000 n 
+0000004498 00000 n 
+0000004636 00000 n 
+0000008265 00000 n 
+0000008403 00000 n 
+0000010717 00000 n 
+0000010856 00000 n 
+0000010927 00000 n 
+trailer
+<< /Size 13 /Root 1 0 R >>
+startxref
+11003
+%%EOF
