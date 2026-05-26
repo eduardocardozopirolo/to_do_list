@@ -1,0 +1,7 @@
+services:
+  frontend:
+    build: .
+    container_name: todo-frontend
+    restart: always
+    ports:
+      - "8080:80"
