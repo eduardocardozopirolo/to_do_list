@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>To Do AWS</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="topbar">
+        <div>
+          <p class="section-label">Projeto AWS</p>
+          <h1>To Do AWS</h1>
+        </div>
+        <button class="icon-button" id="refreshButton" type="button" title="Atualizar dados">
+          <span aria-hidden="true">R</span>
+          Atualizar
+        </button>
+      </header>
+
+      <main>
+        <section class="config-panel" aria-labelledby="configTitle">
+          <div>
+            <p class="section-label">API Backend</p>
+            <h2 id="configTitle">Conexao da aplicacao</h2>
+          </div>
+
+          <div class="config-grid">
+            <label>
+              URL da API de tarefas
+              <input id="apiBaseUrl" type="url" placeholder="http://98.82.185.83:3000" />
+            </label>
+            <label>
+              URL do relatorio
+              <input id="reportUrl" type="url" placeholder="https://sua-api.execute-api.us-east-1.amazonaws.com/report" />
+            </label>
+          </div>
+
+          <div class="config-actions">
+            <button class="secondary-button" id="saveConfigButton" type="button">Salvar URLs</button>
+            <p id="connectionStatus" class="connection-status" role="status">Pronto para conectar.</p>
+          </div>
+        </section>
+
+        <section class="summary-grid" aria-label="Relatorio de tarefas">
+          <article class="summary-card">
+            <span>Total</span>
+            <strong id="totalCount">0</strong>
+          </article>
+          <article class="summary-card success">
+            <span>Concluidas</span>
+            <strong id="completedCount">0</strong>
+          </article>
+          <article class="summary-card warning">
+            <span>Pendentes</span>
+            <strong id="pendingCount">0</strong>
+          </article>
+        </section>
+
+        <div class="workspace-grid">
+          <section class="task-form-panel" aria-labelledby="formTitle">
+            <p class="section-label">Nova tarefa</p>
+            <h2 id="formTitle">Cadastrar tarefa</h2>
+
+            <form id="taskForm">
+              <input id="taskId" type="hidden" />
+
+              <label>
+                Titulo
+                <input id="title" name="title" type="text" maxlength="255" required placeholder="Ex: Testar API Gateway" />
+              </label>
+
+              <label>
+                Descricao
+                <textarea id="description" name="description" rows="5" placeholder="Detalhes da tarefa"></textarea>
+              </label>
+
+              <label>
+                Status
+                <select id="status" name="status">
+                  <option value="pending">Pendente</option>
+                  <option value="completed">Concluida</option>
+                </select>
+              </label>
+
+              <div class="form-actions">
+                <button class="primary-button" type="submit">Salvar</button>
+                <button class="secondary-button" id="cancelEditButton" type="button">Cancelar</button>
+              </div>
+            </form>
+          </section>
+
+          <section class="tasks-panel" aria-labelledby="tasksTitle">
+            <div class="panel-heading">
+              <div>
+                <p class="section-label">Tarefas</p>
+                <h2 id="tasksTitle">Lista do RDS</h2>
+              </div>
+              <span id="lastUpdate" class="last-update">Sem atualizacao</span>
+            </div>
+
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>Titulo</th>
+                    <th>Descricao</th>
+                    <th>Status</th>
+                    <th>Criada em</th>
+                    <th>Acoes</th>
+                  </tr>
+                </thead>
+                <tbody id="tasksTableBody"></tbody>
+              </table>
+            </div>
+
+            <div id="emptyState" class="empty-state" hidden>
+              Nenhuma tarefa cadastrada ainda.
+            </div>
+          </section>
+        </div>
+      </main>
+    </div>
+
+    <script src="./script.js"></script>
+  </body>
+</html>

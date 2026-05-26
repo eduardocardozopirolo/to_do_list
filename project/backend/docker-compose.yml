@@ -1,0 +1,37 @@
+## version: "3.8"
+
+services:
+  api:
+    build: .
+    container_name: todo-api
+    restart: always
+    environment:
+      PORT: ${PORT:-3000}
+      DB_USER: ${DB_USER:-postgres}
+      DB_HOST: ${DB_HOST:-postgres}
+      DB_NAME: ${DB_NAME:-todo_db}
+      DB_PASSWORD: ${DB_PASSWORD:-todo_local_password}
+      DB_PORT: ${DB_PORT:-5432}
+      DB_SSL: ${DB_SSL:-false}
+      DB_CONNECTION_TIMEOUT_MS: ${DB_CONNECTION_TIMEOUT_MS:-10000}
+    ports:
+      - "3000:3000"
+    depends_on:
+      - postgres
+
+  postgres:
+    image: postgres:16
+    container_name: todo-postgres
+    restart: always
+    environment:
+      POSTGRES_USER: ${DB_USER:-postgres}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-todo_local_password}
+      POSTGRES_DB: ${DB_NAME:-todo_db}
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ../database/DATABASE.sql:/docker-entrypoint-initdb.d/01-init.sql:ro
+
+volumes:
+  postgres_data:

@@ -1,0 +1,2 @@
+Frontend → API Gateway → Backend → RDS
+API Gateway → Lambda (/report)

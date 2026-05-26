@@ -1,0 +1,23 @@
+# Dependencies
+node_modules/
+project/backend/node_modules/
+
+# Environment and secrets
+.env
+*.env
+!.env.example
+project/backend/.env
+
+# Local runtime files
+tmp/
+*.log
+npm-debug.log*
+
+# OS/editor files
+.DS_Store
+Thumbs.db
+.vscode/
+
+# Generated screenshots/local QA
+screenshot-*.png
+project/frontend/screenshot-*.png

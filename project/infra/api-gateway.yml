@@ -1,0 +1,186 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: API Gateway HTTP API para o projeto To-Do, com CRUD de tasks e Lambda /report.
+
+Parameters:
+  BackendBaseUrl:
+    Type: String
+    Description: URL publica do backend sem barra final. Exemplo http://98.83.149.213:3000
+  StageName:
+    Type: String
+    Default: prod
+    Description: Nome do stage do API Gateway.
+  CorsAllowedOrigin:
+    Type: String
+    Default: "*"
+    Description: Origem liberada no CORS. Use * para testes ou a URL do frontend.
+  LambdaRoleName:
+    Type: String
+    Default: LabRole
+    Description: Nome de uma role IAM existente para executar a Lambda. Em ambientes VocLabs, normalmente use LabRole.
+
+Resources:
+  TodoHttpApi:
+    Type: AWS::ApiGatewayV2::Api
+    Properties:
+      Name: todo-http-api
+      ProtocolType: HTTP
+      CorsConfiguration:
+        AllowOrigins:
+          - !Ref CorsAllowedOrigin
+        AllowMethods:
+          - GET
+          - POST
+          - PUT
+          - DELETE
+          - OPTIONS
+        AllowHeaders:
+          - content-type
+          - authorization
+
+  TodoHttpApiStage:
+    Type: AWS::ApiGatewayV2::Stage
+    Properties:
+      ApiId: !Ref TodoHttpApi
+      StageName: !Ref StageName
+      AutoDeploy: true
+
+  BackendProxyIntegration:
+    Type: AWS::ApiGatewayV2::Integration
+    Properties:
+      ApiId: !Ref TodoHttpApi
+      IntegrationType: HTTP_PROXY
+      IntegrationMethod: ANY
+      IntegrationUri: !Ref BackendBaseUrl
+      PayloadFormatVersion: "1.0"
+
+  ReportLambda:
+    Type: AWS::Lambda::Function
+    Properties:
+      FunctionName: todo-report
+      Runtime: nodejs20.x
+      Handler: index.handler
+      Role: !Sub "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/${LambdaRoleName}"
+      Timeout: 10
+      Environment:
+        Variables:
+          TASKS_API_URL: !Sub "${BackendBaseUrl}/tasks"
+      Code:
+        ZipFile: |
+          const completedStatuses = new Set([
+            "completed",
+            "complete",
+            "done",
+            "concluido",
+            "concluida",
+          ]);
+
+          const headers = {
+            "content-type": "application/json",
+            "access-control-allow-origin": "*",
+          };
+
+          exports.handler = async () => {
+            try {
+              const response = await fetch(process.env.TASKS_API_URL);
+              if (!response.ok) {
+                throw new Error(`API retornou HTTP ${response.status}`);
+              }
+
+              const tasks = await response.json();
+              const total = Array.isArray(tasks) ? tasks.length : 0;
+              const completed = Array.isArray(tasks)
+                ? tasks.filter((task) => {
+                    const normalizedStatus = String(task.status || "")
+                      .normalize("NFD")
+                      .replace(/[\u0300-\u036f]/g, "")
+                      .toLowerCase();
+
+                    return completedStatuses.has(normalizedStatus);
+                  }).length
+                : 0;
+
+              return {
+                statusCode: 200,
+                headers,
+                body: JSON.stringify({
+                  total,
+                  completed,
+                  pending: total - completed,
+                }),
+              };
+            } catch (error) {
+              return {
+                statusCode: 500,
+                headers,
+                body: JSON.stringify({
+                  error: "Erro ao gerar relatorio",
+                  detail: error.message,
+                }),
+              };
+            }
+          };
+
+  ReportIntegration:
+    Type: AWS::ApiGatewayV2::Integration
+    Properties:
+      ApiId: !Ref TodoHttpApi
+      IntegrationType: AWS_PROXY
+      IntegrationMethod: POST
+      IntegrationUri: !Sub
+        - "arn:${AWS::Partition}:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${LambdaArn}/invocations"
+        - LambdaArn: !GetAtt ReportLambda.Arn
+      PayloadFormatVersion: "2.0"
+
+  ReportLambdaPermission:
+    Type: AWS::Lambda::Permission
+    Properties:
+      Action: lambda:InvokeFunction
+      FunctionName: !Ref ReportLambda
+      Principal: apigateway.amazonaws.com
+      SourceArn: !Sub "arn:aws:execute-api:${AWS::Region}:${AWS::AccountId}:${TodoHttpApi}/*/*/report"
+
+  GetTasksRoute:
+    Type: AWS::ApiGatewayV2::Route
+    Properties:
+      ApiId: !Ref TodoHttpApi
+      RouteKey: "GET /tasks"
+      Target: !Sub "integrations/${BackendProxyIntegration}"
+
+  PostTasksRoute:
+    Type: AWS::ApiGatewayV2::Route
+    Properties:
+      ApiId: !Ref TodoHttpApi
+      RouteKey: "POST /tasks"
+      Target: !Sub "integrations/${BackendProxyIntegration}"
+
+  PutTaskRoute:
+    Type: AWS::ApiGatewayV2::Route
+    Properties:
+      ApiId: !Ref TodoHttpApi
+      RouteKey: "PUT /tasks/{id}"
+      Target: !Sub "integrations/${BackendProxyIntegration}"
+
+  DeleteTaskRoute:
+    Type: AWS::ApiGatewayV2::Route
+    Properties:
+      ApiId: !Ref TodoHttpApi
+      RouteKey: "DELETE /tasks/{id}"
+      Target: !Sub "integrations/${BackendProxyIntegration}"
+
+  ReportRoute:
+    Type: AWS::ApiGatewayV2::Route
+    Properties:
+      ApiId: !Ref TodoHttpApi
+      RouteKey: "GET /report"
+      Target: !Sub "integrations/${ReportIntegration}"
+
+Outputs:
+  ApiEndpoint:
+    Description: URL base do API Gateway.
+    Value: !Sub "https://${TodoHttpApi}.execute-api.${AWS::Region}.amazonaws.com/${StageName}"
+  TasksEndpoint:
+    Description: Endpoint para listar tarefas.
+    Value: !Sub "https://${TodoHttpApi}.execute-api.${AWS::Region}.amazonaws.com/${StageName}/tasks"
+  ReportEndpoint:
+    Description: Endpoint do relatorio.
+    Value: !Sub "https://${TodoHttpApi}.execute-api.${AWS::Region}.amazonaws.com/${StageName}/report"
