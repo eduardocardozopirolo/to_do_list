@@ -1,0 +1,152 @@
+{
+  "info": {
+    "_postman_id": "92c03e3f-d915-4c4d-ad90-15e64a0fb1ce",
+    "name": "To Do List API - AWS",
+    "description": "API CRUD de tarefas integrada com Amazon RDS PostgreSQL, API Gateway e AWS Lambda.\n\nBase URLs:\n\n- Backend direto: [http://98.82.185.83:3000](http://98.82.185.83:3000)\n    \n- API Gateway: [https://7e0beeex42.execute-api.us-east-1.amazonaws.com](https://7e0beeex42.execute-api.us-east-1.amazonaws.com/)\n    \n\nEndpoints:\n\n- GET /tasks\n    \n- POST /tasks\n    \n- PUT /tasks/{id}\n    \n- DELETE /tasks/{id}\n    \n- GET /report",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "52841284",
+    "_collection_link": "https://go.postman.co/collection/52841284-92c03e3f-d915-4c4d-ad90-15e64a0fb1ce?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "verifica api its on",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{backend_url}}",
+          "host": [
+            "{{backend_url}}"
+          ]
+        },
+        "description": "Verifica se o backend está online."
+      },
+      "response": []
+    },
+    {
+      "name": "retorna tarefas",
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{backend_url}}/tasks",
+          "host": [
+            "{{backend_url}}"
+          ],
+          "path": [
+            "tasks"
+          ]
+        },
+        "description": "Lista todas as tarefas cadastradas no banco PostgreSQL RDS."
+      },
+      "response": []
+    },
+    {
+      "name": "cria nova tarefa",
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"title\": \"Estudar Lambda\",\r\n  \"description\": \"Criar rota /report\",\r\n  \"status\": \"pending\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{backend_url}}/tasks/",
+          "host": [
+            "{{backend_url}}"
+          ],
+          "path": [
+            "tasks",
+            ""
+          ]
+        },
+        "description": "Cria uma nova tarefa no banco de dados."
+      },
+      "response": []
+    },
+    {
+      "name": "atualiza api",
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "PUT",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"title\": \"Estudar Lambda\",\r\n  \"description\": \"Criar rota /report funcionando\",\r\n  \"status\": \"completed\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{backend_url}}/tasks/1",
+          "host": [
+            "{{backend_url}}"
+          ],
+          "path": [
+            "tasks",
+            "1"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "deleta tarefa",
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "{{backend_url}}/tasks/2",
+          "host": [
+            "{{backend_url}}"
+          ],
+          "path": [
+            "tasks",
+            "2"
+          ]
+        },
+        "description": "Remove uma tarefa existente pelo ID."
+      },
+      "response": []
+    },
+    {
+      "name": "resumo das tarefas c/ lambda",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{api_gateway_url}}/report",
+          "host": [
+            "{{api_gateway_url}}"
+          ],
+          "path": [
+            "report"
+          ]
+        },
+        "description": "Chama a AWS Lambda integrada ao API Gateway. A Lambda consulta o endpoint /tasks, calcula estatísticas e retorna um relatório."
+      },
+      "response": []
+    }
+  ],
+  "variable": [
+    {
+      "key": "apikey",
+      "value": ""
+    }
+  ]
+}
